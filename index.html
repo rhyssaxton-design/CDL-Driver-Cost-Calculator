@@ -71,6 +71,18 @@
       box-shadow:8px 0 0 rgba(69,219,97,.45), 0 8px 0 rgba(69,219,97,.45);
     }
 
+    .role-kicker{
+      display:inline-block;
+      margin:4px 0 12px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--zip-green);
+      color:var(--zip-gravitas);
+      font-size:.82rem;
+      font-weight:900;
+      letter-spacing:.09em;
+    }
+
     h1{
       margin:0;
       font-size:clamp(2rem,4vw,3.5rem);
@@ -350,21 +362,17 @@
     <section class="hero">
       <div class="brand-lockup">
         <div class="brand-mark" aria-hidden="true"></div>
-        <span>ZipRecruiter Sales Tool</span>
+        <span>ZipRecruiter</span>
       </div>
+      <div class="role-kicker">CDL-A TRUCK DRIVER</div>
       <h1>Cost of Vacancy Calculator</h1>
-      <p>Estimate the production or revenue impact of an open CDL-A Truck Driver role and show the value of filling it faster.</p>
+      <p>Estimate the delivery or revenue impact of an unfilled CDL-A truck driver position and see the value of filling it faster.</p>
     </section>
 
     <section class="grid">
       <div class="card">
-        <h2>Prospect Inputs</h2>
-        <div class="sub">Use the prospect's own estimates whenever possible. Results update instantly.</div>
-
-        <div class="field">
-          <label for="role">Role</label>
-          <input id="role" type="text" value="CDL-A Truck Driver" />
-        </div>
+        <h2>Driver Vacancy Details</h2>
+        <div class="sub">Enter your operating estimates below. Results update instantly.</div>
 
         <div class="field">
           <label for="valuePerDelivery">Average revenue/value per delivery</label>
@@ -392,7 +400,7 @@
 
       <div class="card">
         <h2>Vacancy Impact</h2>
-        <div class="sub">Estimated production or revenue impact based on the inputs above.</div>
+        <div class="sub">Estimated financial impact of leaving a CDL-A driver position unfilled.</div>
 
         <div class="metrics">
           <div class="metric">
@@ -406,12 +414,12 @@
           </div>
 
           <div class="metric">
-            <div class="label">Cost of Vacancy So Far</div>
+            <div class="label">Vacancy Impact So Far</div>
             <div class="value" id="costSoFar">$51,429</div>
           </div>
 
           <div class="metric">
-            <div class="label">Additional Cost if Role Remains Open</div>
+            <div class="label">Additional Impact if Position Remains Open</div>
             <div class="value" id="futureCost">$51,429</div>
           </div>
         </div>
@@ -427,7 +435,7 @@
       <div class="section-title">
         <div>
           <h2>Value of Filling the Role Faster</h2>
-          <div class="sub" style="margin:4px 0 0">Show how much production value could potentially be preserved by shortening time-to-fill.</div>
+          <div class="sub" style="margin:4px 0 0">See how much delivery value could potentially be preserved by filling the driver position sooner.</div>
         </div>
         <div class="daily">Daily value: <strong id="dailyValueSmall">$1,714</strong></div>
       </div>
@@ -436,21 +444,21 @@
 
       <div class="whatif">
         <div>
-          <label for="customDays">What if we helped you fill this role sooner?</label>
+          <label for="customDays">What if this driver position were filled sooner?</label>
           <input id="customDays" type="number" min="0" step="1" value="14" />
-          <div class="sub" style="margin:8px 0 0">Enter the number of days faster you want to model.</div>
+          <div class="sub" style="margin:8px 0 0">Enter the number of days sooner you want to model.</div>
         </div>
 
         <div class="whatif-result" aria-live="polite">
           <div class="small">Potential Value Preserved</div>
           <div class="big" id="customSavings">$24,000</div>
-          <div class="small" id="customNote" style="margin-top:8px">Filling this role 14 days faster could preserve approximately $24,000 in production value.</div>
+          <div class="small" id="customNote" style="margin-top:8px">Filling this role 14 days faster could preserve approximately $24,000 in delivery value.</div>
         </div>
       </div>
     </section>
 
     <section class="section talk">
-      <h3>Suggested Sales Talk Track</h3>
+      <h3>What the Numbers Mean</h3>
       <p id="talkTrack"></p>
     </section>
 
@@ -524,7 +532,7 @@
 
             const days = document.createElement('div');
             days.className = 'days';
-            days.textContent = `Fill ${Math.round(d)} Days Faster`;
+            days.textContent = `Fill ${Math.round(d)} Days Sooner`;
 
             const amount = document.createElement('div');
             amount.className = 'amount';
@@ -550,14 +558,14 @@
         const saved = daily * requested;
         $('customSavings').textContent = money(saved);
         $('customNote').textContent = requested > 0
-          ? `Filling this role ${Math.round(requested)} days faster could preserve approximately ${money(saved)} in production value.`
+          ? `Filling this role ${Math.round(requested)} days faster could preserve approximately ${money(saved)} in delivery value.`
           : 'Enter a number of days to estimate the value of shortening the vacancy.';
 
         $('talkTrack').textContent =
-          `This role represents approximately ${money(weekly)} in weekly production. ` +
-          `Based on how long it has already been open, the estimated vacancy impact so far is ${money(past)}. ` +
-          `If it remains open another ${Math.round(b)} days, that adds roughly ${money(future)} in potential impact.` +
-          (requested > 0 ? ` If the role were filled ${Math.round(requested)} days faster, that could preserve approximately ${money(saved)} in production value.` : '');
+          `At these operating assumptions, one CDL-A driver represents approximately ${money(weekly)} in weekly delivery value. ` +
+          `Based on the number of days the position has already been open, the estimated vacancy impact to date is ${money(past)}. ` +
+          `If the position remains open another ${Math.round(b)} days, the additional estimated impact is ${money(future)}.` +
+          (requested > 0 ? ` Filling the position ${Math.round(requested)} days sooner could preserve approximately ${money(saved)} in delivery value.` : '');
       }
 
       [valuePerDelivery, deliveriesPerWeek, daysOpen, daysRemaining, customDays].forEach(el => {
